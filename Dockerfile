@@ -17,8 +17,6 @@ ENV DEBIAN_FRONTEND noninteractive
 # update, and install basic packages
 RUN apt-get update -qq && \
     apt-get upgrade -y && \
-    apt-get -y install --no-install-recommends software-properties-common && \
-    add-apt-repository ppa:ubuntu-toolchain-r/test && \
     apt-get -y install --no-install-recommends \
     autoconf \
     automake \
@@ -40,11 +38,10 @@ RUN apt-get update -qq && \
     libnuma-dev \
     gcc-8 \
     g++-8 \
-    gcc-9 \
-    g++-9 \
     ca-certificates \
     asciidoc \
-    xmlto
+    xmlto \
+    libstdc++6
 
 
 ENV TZ=UTC
@@ -54,7 +51,7 @@ RUN mkdir -p /opt/ffmpeg/bin
 ENV PATH="/opt/ffmpeg/bin:$PATH"
 ENV PKG_CONFIG_PATH="/opt/ffmpeg/lib/pkgconfig"
 
-RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 700 --slave /usr/bin/g++ g++ /usr/bin/g++-7 && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 800 --slave /usr/bin/g++ g++ /usr/bin/g++-8 && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 900 --slave /usr/bin/g++ g++ /usr/bin/g++-9 --slave /usr/bin/gcov gcov /usr/bin/gcov-9
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 700 --slave /usr/bin/g++ g++ /usr/bin/g++-7 && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 800 --slave /usr/bin/g++ g++ /usr/bin/g++-8
 
 WORKDIR /opt/sources
 # RUN curl -sS -O https://www.nasm.us/pub/nasm/releasebuilds/${nasm_version}/nasm-${nasm_version}.tar.xz
@@ -107,7 +104,7 @@ RUN make -j$(nproc)
 RUN make install
 
 WORKDIR /opt/sources/aom
-RUN git -C aom pull 2> /dev/null || git clone --branch ${libaom_version} --depth 1 https://aomedia.googlesource.com/aom .
+RUN git clone --branch ${libaom_version} --depth 1 https://aomedia.googlesource.com/aom .
 WORKDIR /opt/sources/aom_build
 RUN cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="/opt/ffmpeg" -DBUILD_SHARED_LIBS=off -DENABLE_TOOLS=off -DENABLE_DOCS=off -DENABLE_EXAMPLES=off -DENABLE_TESTS=off -DENABLE_NASM=on ../aom
 RUN make -j$(nproc)
