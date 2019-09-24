@@ -2,7 +2,7 @@ name: Push to Docker Hub
 
 on:
   schedule:
-  - cron: 32 17 * * *
+  - cron: 0 0 * * 0
 
 jobs:
   build: 
@@ -12,7 +12,7 @@ jobs:
       uses: actions/checkout@master
       
     - name: Publish to Registry
-      uses: elgohr/Publish-Docker-Github-Action@1.12
+      uses: elgohr/Publish-Docker-Github-Action@master
       with:
         name: singhkays/ffmpeg-av1-libaom
         username: ${{ secrets.DOCKER_USERNAME }}
