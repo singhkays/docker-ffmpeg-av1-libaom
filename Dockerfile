@@ -63,7 +63,7 @@ RUN make -j$(nproc)
 RUN make install
 
 WORKDIR /opt/sources/x264
-RUN git clone --branch ${x264_version} --depth 1 https://git.videolan.org/git/x264 .
+RUN git clone --branch ${x264_version} --depth 1 https://code.videolan.org/videolan/x264.git .
 RUN ./configure --prefix="/opt/ffmpeg" --bindir="/opt/ffmpeg/bin" --enable-static --enable-pic
 RUN make -j$(nproc)
 RUN make install
