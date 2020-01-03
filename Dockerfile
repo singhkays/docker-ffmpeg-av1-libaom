@@ -3,7 +3,7 @@
 FROM ubuntu:bionic as build
 ARG nasm_version=2.14.02
 ARG x264_version=master
-ARG x265_version=3.1.1
+ARG x265_version=3.2.1
 ARG libvpx_version=v1.8.1
 ARG fdk_aac_version=v2.0.0
 ARG lame_version=3.100
