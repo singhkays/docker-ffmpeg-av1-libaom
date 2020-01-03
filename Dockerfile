@@ -10,7 +10,7 @@ ARG lame_version=3.100
 ARG opus_version=v1.3.1
 ARG libaom_version=master
 ARG vmaf_version=v1.3.15
-ARG ffmpeg_version=4.2.1
+ARG ffmpeg_version=4.2.2
 
 ENV DEBIAN_FRONTEND noninteractive
 
